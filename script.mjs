@@ -36,12 +36,12 @@ server.get('/tmp/quote', (req, res) => {
     res.send(randomquote);
 })
 
-server.post('tmp/sum/:a/:b', (req, res) => {
+server.post('/tmp/sum/:a/:b', (req, res) => {
     const a = parseInt(req.params.a);
     const b = parseInt(req.params.b);
 
     const sum = a + b;
-    res.send(sum);
+    res.send(sum.toString());
 })
 
 server.get("/", getRoot);
