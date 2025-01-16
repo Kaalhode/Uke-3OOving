@@ -14,7 +14,6 @@ const quotes = [
     "Im a idiot.<br> Im even bad at being depressed",
     "I say I have no reason to win, but why is it so painful when I lose?<br> I am so half-hearted about everything"
 ]
-///let randomquote = quotes[Math.floor(Math.random() * quotes.length)]
 
 function getRandomQuote(quotes) {
     return quotes[Math.floor(Math.random() * quotes.length)];
@@ -35,6 +34,14 @@ server.get('/tmp/quote', (req, res) => {
     getRandomQuote(quotes);
     let randomquote = getRandomQuote(quotes);
     res.send(randomquote);
+})
+
+server.post('tmp/sum/:a/:b', (req, res) => {
+    const a = parseInt(req.params.a);
+    const b = parseInt(req.params.b);
+
+    const sum = a + b;
+    res.send(sum);
 })
 
 server.get("/", getRoot);
