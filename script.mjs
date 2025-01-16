@@ -19,7 +19,6 @@ const quotes = [
 function getRandomQuote(quotes) {
     return quotes[Math.floor(Math.random() * quotes.length)];
 }
-const randomquote = getRandomQuote(quotes);
 
 server.set('port', port);
 server.use(express.static('public'));
@@ -33,6 +32,8 @@ server.get('/tmp/poem', (req, res) => {
 })
 
 server.get('/tmp/quote', (req, res) => {
+    getRandomQuote(quotes);
+    let randomquote = getRandomQuote(quotes);
     res.send(randomquote);
 })
 
