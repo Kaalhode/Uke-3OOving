@@ -11,6 +11,17 @@ function getRoot(req, res, next) {
     res.status(HTTP_CODES.SUCCESS.OK).send('Hello World').end();
 }
 
+const Poems = []
+
+function getPoem(){
+
+}
+
+app.use('/tmp/poem', function getPoem (req, res,next){
+    next()
+})
+
+
 server.get("/", getRoot);
 
 server.listen(server.get('port'), function () {
