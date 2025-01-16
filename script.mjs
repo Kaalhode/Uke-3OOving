@@ -14,7 +14,13 @@ const quotes = [
     "Im a idiot.<br> Im even bad at being depressed",
     "I say I have no reason to win, but why is it so painful when I lose?<br> I am so half-hearted about everything"
 ]
-let randomquote =
+///let randomquote = quotes[Math.floor(Math.random() * quotes.length)]
+
+function getRandomQuote(quotes) {
+    return quotes[Math.floor(Math.random() * quotes.length)];
+}
+const randomquote = getRandomQuote(quotes);
+
 server.set('port', port);
 server.use(express.static('public'));
 
@@ -27,8 +33,9 @@ server.get('/tmp/poem', (req, res) => {
 })
 
 server.get('/tmp/quote', (req, res) => {
-    res.send(quote);
+    res.send(randomquote);
 })
+
 server.get("/", getRoot);
 
 server.listen(server.get('port'), function () {
