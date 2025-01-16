@@ -4,6 +4,7 @@ import HTTP_CODES from './utils/httpCodes.mjs';
 const server = express();
 const port = (process.env.PORT || 8000);
 
+const poem = "poem";
 server.set('port', port);
 server.use(express.static('public'));
 
@@ -11,11 +12,9 @@ function getRoot(req, res, next) {
     res.status(HTTP_CODES.SUCCESS.OK).send('Hello World').end();
 }
 
-app.get('/tmp/poem', (req, res,next) => {
-    res.send('her kommer et dikt').end();
-    
+server.get('/tmp/poem', (req, res) => {
+    res.send(poem);
 })
-
 
 server.get("/", getRoot);
 
