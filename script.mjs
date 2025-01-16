@@ -11,14 +11,12 @@ function getRoot(req, res, next) {
     res.status(HTTP_CODES.SUCCESS.OK).send('Hello World').end();
 }
 
-const Poems = []
-
 function getPoem(){
 
 }
 
-app.use('/tmp/poem', function getPoem (req, res,next){
-    next()
+app.get('/tmp/poem', (req, res,next) => {
+    res.send('get requesat to the homepage')
 })
 
 
