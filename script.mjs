@@ -50,26 +50,26 @@ server.listen(server.get('port'), function () {
     console.log('server running', server.get('port'));
 });
 
-let suits = ["Clubs", "Diamonds", "Hearts", "Spades"]
+const suits = ["Clubs", "Diamonds", "Hearts", "Spades"]
 
-let ranks = ["Ace", "2", "3", "4", "5","6","7","8","9","10","Jack","Queen","King"]
+const ranks = ["Ace", "2", "3", "4", "5","6","7","8","9","10","Jack","Queen","King"]
+
+let decks = []
+let deckcounter = 0;
 
 function createDeck(){
-    let carddeck = [];
-    for(let i = 0; i < suits.length; i++){
-        for(let j = 0; j < ranks.length; i++){
-            carddeck.push(card(suits[i],ranks[j]))
+    let deck = [];
+    for(let suit of suits){
+        for(let rank of ranks){
+            deck.push({suit, rank})
         }
     }
-    return carddeck
+    return deck;
 }
 
-let carddeck = createDeck()
-
-function card(suits, ranks){
-    return {suits, ranks}
-}
-
-let decks = {}
-
+server.post('/temp/deck', (req, res) => {
+    const deckId = ++deckcounter;
+    decks[deckId] = createDeck();
+    res.send({ deck_id: deckId });
+});
 
