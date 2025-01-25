@@ -49,3 +49,27 @@ server.get("/", getRoot);
 server.listen(server.get('port'), function () {
     console.log('server running', server.get('port'));
 });
+
+let suits = ["Clubs", "Diamonds", "Hearts", "Spades"]
+
+let ranks = ["Ace", "2", "3", "4", "5","6","7","8","9","10","Jack","Queen","King"]
+
+function createDeck(){
+    let carddeck = [];
+    for(let i = 0; i < suits.length; i++){
+        for(let j = 0; j < ranks.length; i++){
+            carddeck.push(card(suits[i],ranks[j]))
+        }
+    }
+    return carddeck
+}
+
+let carddeck = createDeck()
+
+function card(suits, ranks){
+    return {suits, ranks}
+}
+
+let decks = {}
+
+
