@@ -73,3 +73,32 @@ server.post('/temp/deck', (req, res) => {
     res.send({ deck_id: deckId });
 });
 
+server.patch('/temp/deck/shuffle/:deck_id', (req, res) => {
+    const deckId = req.params.deck_id;
+    if (decks[deckId]) {
+        decks[deckId] = decks[deckId].sort(() => Math.random() - 0.5);
+        res.send({ status: 'shuffled', deck_id: deckId });
+    } else {
+        res.status(404).send({ error: 'Deck not found' });
+    }
+});
+server.get('/temp/deck/:deck_id', (req, res) => {
+    const deckId = req.params.deck_id;
+    if (decks[deckId]) {
+        res.send(decks[deckId]);
+    } else {
+        res.status(404).send({ error: 'Deck not found' });
+    }
+});
+
+server.get('/temp/deck/:deck_id/card', (req, res) => {
+    const deckId = req.params.deck_id;
+    if (decks[deckId] && decks[deckId].length > 0) {
+        const card = decks[deckId].splice(Math.floor(Math.random() * decks[deckId].length), 1)[0];
+        res.send(card);
+    } else {
+        res.status(404).send({ error: 'Deck not found or empty' });
+    }
+});
+
+server.use(express.static('public'));
