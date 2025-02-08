@@ -2,6 +2,8 @@ import express from 'express'
 import HTTP_CODES from './utils/httpCodes.mjs';
 
 const server = express();
+const filesystem = require('fs');
+const path = require('path')
 const port = (process.env.PORT || 8000);
 
 const poem = "Ensom Alene i stillhet, går vi hver vår vei<br> Ensomheten fyller oss Glede er noe vi ikke kjenner til.<br> Men vi vet noe i livet. Sannheten.<br> Snart vil folk forstå.<br> Enn så lenge, gjør vi som vi gjør.<br> Vi vet da, hva som skjer i morgen.<br> I morgen møter vi verden med vår ensomhet.<br> Dikt skrevet av Snowder (ris og ros) fra dikt.org";
@@ -101,4 +103,10 @@ server.get('/temp/deck/:deck_id/card', (req, res) => {
     }
 });
 
+server.use(express.json());
 server.use(express.static('public'));
+const savedsessionpath = require(__dirname,'modules','sessions.json');
+
+function createSessionId(){
+    return Math.random(36).toString.substr(2,18);
+}
