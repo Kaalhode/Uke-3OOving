@@ -1,7 +1,10 @@
 import express from 'express'
 import HTTP_CODES from './utils/httpCodes.mjs';
+import path from 'path';
+import {writeFileSync} from 'fs';
 import {poem, quotes, getRandomQuote} from './modules/poetry.mjs'
 import {decks, incrementDeckCounter, deckCounter,createDeck} from './modules/decks.mjs'
+import {__filename,__dirname,savedsessionpath, createSessionId, readSessionData} from './modules/session.mjs'
 
 const server = express();
 const port = (process.env.PORT || 8000);
@@ -74,3 +77,42 @@ server.get('/temp/deck/:deck_id/card', (req, res) => {
 
 server.use(express.json());
 server.use(express.static('public'));
+
+server.use((req, res, next) => {
+    let sessionId = req.headers['session-id'];
+    if (!sessionId) {
+        sessionId = createSessionId();
+        res.setHeader('Set-Session-Id', sessionId);
+    }
+
+    let sessionData = readSessionData();
+
+    let session = sessionData[sessionId];
+
+    if (!session) {
+        session = { sessionId, views: 0 };
+        sessionData[sessionId] = session;
+    }
+
+    req.session = session;
+
+    next();
+});
+
+server.get('/views', (req, res) => {
+    req.session.views++;
+    let sessionData = readSessionData();
+
+    sessionData[req.session.sessionId] = req.session;
+    writeFileSync(savedsessionpath, JSON.stringify(sessionData, null, 2), 'utf-8');
+
+    res.json({ views: req.session.views });
+});
+
+server.get('/reset', (req, res) => {
+    let sessionData = readSessionData();
+    delete sessionData[req.headers['session-id']];
+    writeFileSync(savedsessionpath, JSON.stringify(sessionData, null, 2), 'utf-8');
+
+    res.send('session reset');
+});
