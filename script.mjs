@@ -74,8 +74,3 @@ server.get('/temp/deck/:deck_id/card', (req, res) => {
 
 server.use(express.json());
 server.use(express.static('public'));
-const savedsessionpath = require(__dirname,'modules','sessions.json');
-
-function createSessionId(){
-    return Math.random(36).toString.substr(2,18);
-}
