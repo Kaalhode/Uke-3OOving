@@ -50,7 +50,7 @@ server.patch('/temp/deck/shuffle/:deck_id', (req, res) => {
         decks[deckId] = decks[deckId].sort(() => Math.random() - 0.5);
         res.send({ status: 'shuffled', deck_id: deckId });
     } else {
-        res.status(404).send({ error: 'Deck not found' });
+        res.status(HTTP_CODES.CLIENT_ERROR.NOT_FOUND).send({ error: 'Deck not found' });
     }
 });
 server.get('/temp/deck/:deck_id', (req, res) => {
@@ -58,7 +58,7 @@ server.get('/temp/deck/:deck_id', (req, res) => {
     if (decks[deckId]) {
         res.send(decks[deckId]);
     } else {
-        res.status(404).send({ error: 'Deck not found' });
+        res.status(HTTP_CODES.CLIENT_ERROR.NOT_FOUND).send({ error: 'Deck not found' });
     }
 });
 
@@ -68,7 +68,7 @@ server.get('/temp/deck/:deck_id/card', (req, res) => {
         const card = decks[deckId].splice(Math.floor(Math.random() * decks[deckId].length), 1)[0];
         res.send(card);
     } else {
-        res.status(404).send({ error: 'Deck not found or empty' });
+        res.status(HTTP_CODES.CLIENT_ERROR.NOT_FOUND).send({ error: 'Deck not found or empty' });
     }
 });
 
