@@ -27,9 +27,26 @@ class ImageGallery {
         }
         return null;
     }
+    deleteImageById(imageId) {
+        if (!this.head) {
+            return;
+        }
 
+        if (this.head.imageId === imageId) {
+            this.head = this.head.next;
+            return;
+        }
+
+        let current = this.head;
+        while (current.next) {
+            if (current.next.imageId === imageId) {
+                current.next = current.next.next;
+                return;
+            }
+            current = current.next;
+        }
+    }
     /*
-    deleteImageById
     updateImageUrl
     displayGallery
     */
