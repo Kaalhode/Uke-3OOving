@@ -21,15 +21,16 @@ function findImageById(req, res) {
 function deleteImageById(req, res){
     const imageId = req.params.imageId;
     gallery.deleteImageById(imageId);
-    res.status(HTTP_CODES.SUCCESS.OK).send('Image deleted sucessfully')
+    res.status(HTTP_CODES.SUCCESS.OK).send('Image deleted sucessfully');
 };
 
 function updateImageUrl(req,res){
     const { imageId, newImageUrl } = req.body;
     gallery.updateImageUrl(imageId, newImageUrl);
-    res.status(HTTP_CODES.SUCCESS.OK).send('Image Url updated sucessfully')
+    res.status(HTTP_CODES.SUCCESS.OK).send('Image Url updated sucessfully');
 };
 
-/*
-displayGallery
-*/
+function displayGallery(req,res){
+    const images = gallery.displayGallery();
+    res.status(HTTP_CODES.SUCCESS.OK).json(images);
+}
