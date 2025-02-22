@@ -46,8 +46,25 @@ class ImageGallery {
             current = current.next;
         }
     }
-    /*
-    updateImageUrl
-    displayGallery
-    */
+    updateImageUrl(imageId, newImageUrl) {
+        let current = this.head;
+        while (current) {
+            if (current.imageId === imageId) {
+                current.imageUrl = newImageUrl;
+                return;
+            }
+            current = current.next;
+        }
+    }
+    displayGallery() {
+        let current = this.head;
+        const images = [];
+        while (current) {
+            images.push({ imageId: current.imageId, imageUrl: current.imageUrl });
+            current = current.next;
+        }
+        return images;
+    }
 }
+
+export default ImageGallery
