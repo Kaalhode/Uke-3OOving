@@ -7,3 +7,18 @@ function addImage(req, res) {
     gallery.addImage(imageId, imageUrl);
     res.status(HTTP_CODES.SUCCESS.OK).send('Image added successfully');
 };
+
+function findImageById(req, res) {
+    const imageId = req.params.imageId;
+    const image = gallery.findImageById(imageId);
+    if(image){
+        res.status(HTTP_CODES.SUCCESS.OK).json(image);
+    } else {
+        res.status(HTTP_CODES.CLIENT_ERROR.NOT_FOUND).send('Image not found');
+    }
+}
+
+/*deleteImageById
+updateImageUrl
+displayGallery
+*/
