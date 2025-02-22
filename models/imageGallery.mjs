@@ -17,8 +17,18 @@ class ImageGallery {
             current.next = newNode
         }
     }
+    findImageById(imageId) {
+        let current = this.head;
+        while (current) {
+            if (current.imageId === imageId) {
+                return current;
+            }
+            current = current.next;
+        }
+        return null;
+    }
+
     /*
-    findImageById
     deleteImageById
     updateImageUrl
     displayGallery
