@@ -1,4 +1,7 @@
 {
+  "scripts":{
+    "start": "node galleryserver.mjs"
+  },
   "dependencies": {
     "express": "4.21.2"
   }
