@@ -18,7 +18,13 @@ function findImageById(req, res) {
     }
 }
 
-/*deleteImageById
+function deleteImageById(req, res){
+    const imageId = req.params.imageId;
+    gallery.deleteImageById(imageId);
+    res.status(HTTP_CODES.SUCCESS.OK).send('Image deleted sucessfully')
+}
+
+/*
 updateImageUrl
 displayGallery
 */
