@@ -1,5 +1,5 @@
 import ImageGallery from '../models/imageGallery.mjs';
-import HTTP_CODES from './utils/httpCodes.mjs';
+import HTTP_CODES from '../utils/httpCodes.mjs';
 const gallery = new ImageGallery();
 
 export function addImage(req, res) {
