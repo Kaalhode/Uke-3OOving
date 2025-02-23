@@ -1,0 +1,181 @@
+{
+	"info": {
+		"_postman_id": "f82c908c-b4c8-4616-9e12-1ab725b7d918",
+		"name": "Test for image gallery",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "42553897"
+	},
+	"item": [
+		{
+			"name": "Add Image",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"imageId\": \"1\",\r\n    \"imageUrl\": \"http://example.com/image1.jpg\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/gallery/add",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"gallery",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find Image by Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/gallery/find/:imageId",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"gallery",
+						"find",
+						":imageId"
+					],
+					"variable": [
+						{
+							"key": "imageId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Image",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"imageId\": \"1\",\r\n    \"newImageUrl\": \"http://example.com/image2.jpg\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/gallery/update",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"gallery",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Request Gallery",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"imageId\": \"1\",\r\n    \"newImageUrl\": \"http://example.com/image2.jpg\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/gallery",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"gallery"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Image",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"imageId\": \"1\",\r\n    \"newImageUrl\": \"http://example.com/image2.jpg\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/gallery/delete/:imageId",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"gallery",
+						"delete",
+						":imageId"
+					],
+					"variable": [
+						{
+							"key": "imageId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check if theres anything left",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"imageId\": \"1\",\r\n    \"newImageUrl\": \"http://example.com/image2.jpg\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/gallery",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"gallery"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
