@@ -1,3 +1,10 @@
+if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("service-worker.js")
+        .then(() => console.log("Service Worker Registered"))
+        .catch((error) => console.error("Service Worker Registration Failed:", error));
+}
+
+
 async function fetchGalleries() {
     const response = await fetch('/gallery/list');
     const galleries = await response.json();
