@@ -1,0 +1,31 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    text-align: center;
+}
+
+.gallery-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.gallery-item {
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background: white;
+}
+
+button {
+    padding: 8px 12px;
+    border: none;
+    background: rgb(207, 83, 83);
+    color: white;
+    cursor: pointer;
+}
+.image-container img { width: 200px; 
+    height: auto;
+    margin: 10px;
+    border-radius: 5px;
+}

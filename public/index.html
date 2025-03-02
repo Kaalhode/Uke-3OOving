@@ -3,9 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="scripts/clientscript.mjs"> </script>
-    <title>Gallery</title>
+    <title>Gallery Viewer</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <h1>Gallery Viewer</h1>
+    <div class="gallery-container">
+        <h2>Select a Gallery:</h2>
+        <ul id="gallery-list"></ul>
+    </div>
+    
+    <div class="form-container">
+        <h2>Create/Update Gallery</h2>
+        <input type="text" id="gallery-name" placeholder="Enter gallery name">
+        <button onclick="createGallery()">Create/Update Gallery</button>
+    </div>
+    
+    <div class="form-container">
+        <h2>Delete Gallery</h2>
+        <input type="text" id="delete-gallery-name" placeholder="Gallery Name">
+        <button onclick="deleteGallery()">Delete Gallery</button>
+    </div>
+    
+    <h2>Gallery Images</h2>
+    <div id="image-container" class="image-container"></div>
+    
+    <div class="form-container">
+        <h2>Upload Image</h2>
+        <input type="text" id="upload-gallery-name" placeholder="Gallery Name">
+        <input type="text" id="image-id" placeholder="Image ID">
+        <input type="text" id="image-url" placeholder="Image URL">
+        <button onclick="uploadImage()">Upload Image</button>
+    </div>
+    
+   <!-- <div class="form-container">
+        <h2>Delete Image</h2>
+        <input type="text" id="delete-gallery-id" placeholder="Gallery Name">
+        <input type="text" id="delete-image-id" placeholder="Image ID">
+        <button onclick="deleteImage('${galleryId}','{image.imageId}')">Delete Image</button>
+    </div> -->
+    <script src="scripts/clientscript.mjs"></script>
 </body>
 </html>
