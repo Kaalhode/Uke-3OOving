@@ -1,0 +1,188 @@
+{
+	"info": {
+		"_postman_id": "d22e0973-67ac-489d-a9e2-009bd7c6eee1",
+		"name": "Image Gallery API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "42553897"
+	},
+	"item": [
+		{
+			"name": "Delete Image by ID",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/gallery/{{galleryId}}/delete/{{imageId}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"gallery",
+						"{{galleryId}}",
+						"delete",
+						"{{imageId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Gallery",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/gallery/delete/{{galleryId}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"gallery",
+						"delete",
+						"{{galleryId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Gallery",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"galleryId\": \"myGallery\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/gallery/create",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"gallery",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Image to Gallery",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"galleryId\": \"myGallery\",\n  \"imageId\": \"123\",\n  \"imageUrl\": \"https://cdn.pixabay.com/photo/2023/12/07/11/11/girl-8435340_960_720.png\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/gallery/{{galleryId}}/add",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"gallery",
+						"{{galleryId}}",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Galleries",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/gallery/list",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"gallery",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Display Gallery",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/gallery/{{galleryId}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"gallery",
+						"{{galleryId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find Image by ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/gallery/{{galleryId}}/find/{{imageId}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"gallery",
+						"{{galleryId}}",
+						"find",
+						"{{imageId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Image URL",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"galleryId\": \"myGallery\",\n  \"imageId\": \"123\",\n  \"newImageUrl\": \"https://cdn.pixabay.com/photo/2023/12/07/11/11/girl-8435340_960_720.png\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/gallery/{{galleryId}}/update",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"gallery",
+						"{{galleryId}}",
+						"update"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
