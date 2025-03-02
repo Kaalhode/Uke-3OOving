@@ -1,11 +1,15 @@
 import express from 'express'
-import {addImage,findImageById,deleteImageById, updateImageUrl, displayGallery} from '../controllers/galleryController.mjs'
+import {createGallery,addImage,findImageById,deleteImageById, updateImageUrl, displayGallery, deleteGallery,listGalleries} from '../controllers/galleryController.mjs'
 const router = express.Router();
 
-router.post('/add', addImage)
-router.get('/find/:imageId', findImageById);
-router.delete('/delete/:imageId', deleteImageById);
-router.put('/update', updateImageUrl);
-router.get('/', displayGallery)
+
+router.post('/create', createGallery);
+router.get('/list', listGalleries);
+router.delete('/delete/:galleryId', deleteGallery);
+router.post('/:galleryId/add', addImage);
+router.get('/:galleryId/find/:imageId', findImageById);
+router.delete('/:galleryId/delete/:imageId', deleteImageById);
+router.put('/:galleryId/update', updateImageUrl);
+router.get('/:galleryId', displayGallery);
 
 export default router;
