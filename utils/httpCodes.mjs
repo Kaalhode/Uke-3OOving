@@ -1,5 +1,3 @@
-import { setUncaughtExceptionCaptureCallback } from "node:process"
-
 const HTTP_CODES = {
 
     SUCCESS: {
@@ -10,6 +8,9 @@ const HTTP_CODES = {
         NOT_FOUND: 404,
         BAD_REQUEST: 400,
     },
+    SERVER_ERROR:{
+        INTERNAL_SERVER_ERROR: 500,
+    }
 }
 
 export default HTTP_CODES;

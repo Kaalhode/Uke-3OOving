@@ -15,34 +15,21 @@
     </div>
     
     <div class="form-container">
-        <h2>Create/Update Gallery</h2>
+        <h2>Create Gallery</h2>
         <input type="text" id="gallery-name" placeholder="Enter gallery name">
-        <button onclick="createGallery()">Create/Update Gallery</button>
-    </div>
-    
-    <div class="form-container">
-        <h2>Delete Gallery</h2>
-        <input type="text" id="delete-gallery-name" placeholder="Gallery Name">
-        <button onclick="deleteGallery()">Delete Gallery</button>
+        <button onclick="createGallery()">Create Gallery</button>
     </div>
     
     <h2>Gallery Images</h2>
-    <div id="image-container" class="image-container"></div>
-    
+    <div id="gallery-container">
+        <button id="delete-current-gallery-btn" onclick="deleteCurrentGallery()">Delete Current Gallery</button>
+        <div id="image-container" class="image-container"></div>
+    </div>
     <div class="form-container">
         <h2>Upload Image</h2>
-        <input type="text" id="upload-gallery-name" placeholder="Gallery Name">
-        <input type="text" id="image-id" placeholder="Image ID">
-        <input type="text" id="image-url" placeholder="Image URL">
-        <button onclick="uploadImage()">Upload Image</button>
+        <input type="text" id="image-url-input" placeholder="Enter Image URL">
+        <button onclick="uploadImageToGallery(currentGalleryId)">Upload Image</button>
     </div>
-    
-   <!-- <div class="form-container">
-        <h2>Delete Image</h2>
-        <input type="text" id="delete-gallery-id" placeholder="Gallery Name">
-        <input type="text" id="delete-image-id" placeholder="Image ID">
-        <button onclick="deleteImage('${galleryId}','{image.imageId}')">Delete Image</button>
-    </div> -->
     <script src="scripts/clientscript.mjs"></script>
 </body>
 </html>

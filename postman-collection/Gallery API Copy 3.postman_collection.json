@@ -1,0 +1,210 @@
+{
+	"info": {
+		"_postman_id": "fdeefaf1-53b6-4953-9151-22c6bd036377",
+		"name": "Gallery API Copy 3",
+		"description": "Collection to test the Gallery API endpoints for managing galleries and images.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "42553897"
+	},
+	"item": [
+		{
+			"name": "Create Gallery",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Art Gallery\",\n    \"description\": \"A collection of beautiful paintings.\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/galleries",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"galleries"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Image to Gallery",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"url\": \"https://cdn.pixabay.com/photo/2023/12/07/11/11/girl-8435340_960_720.png\"\n}\n"
+				},
+				"url": {
+					"raw": "{{base_url}}/galleries/{{galleryId}}/images",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"galleries",
+						"{{galleryId}}",
+						"images"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fetch all Galleries",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/galleries/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"galleries",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List a specific Gallery",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/galleries/{{galleryId}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"galleries",
+						"{{galleryId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List a specific Gallery Copy",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/galleries/{{galleryId}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"galleries",
+						"{{galleryId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Images in Gallery",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/galleries/{{galleryId}}/images",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"galleries",
+						"{{galleryId}}",
+						"images"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Change img url",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"newUrl\": \"https://pbs.twimg.com/media/Gl8RWoFWMAAZATX?format=jpg&name=4096x4096\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/{{galleryId}}/images/{{imageId}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"{{galleryId}}",
+						"images",
+						"{{imageId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Image",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/galleries/{{galleryId}}/images/{{imageId}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"galleries",
+						"{{galleryId}}",
+						"images",
+						"{{imageId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Gallery",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/galleries/{{galleryId}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"galleries",
+						"{{galleryId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:3000"
+		}
+	]
+}

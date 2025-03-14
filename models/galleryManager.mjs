@@ -1,97 +1,85 @@
-import fs from 'fs';
-import path from 'path';
-import ImageGallery from './imageGallery.mjs';
-
-const GALLERIES_DIR = './galleries';
+import GalleryStore from "../data/graphRecordStore.mjs";
 
 class GalleryManager {
     constructor() {
-        this.galleries = new Map();
-        this.loadGalleries(); 
+        this.store = new GalleryStore();
     }
 
-    ensureGalleriesFolder() {
-        if (!fs.existsSync(GALLERIES_DIR)) {
-            fs.mkdirSync(GALLERIES_DIR);
+    async createGallery(name, description) {
+        if (!name) {
+            throw new Error("Gallery name is required.");
         }
+        return await this.store.create({ name, description });
     }
 
-    loadGalleries() {
-        this.ensureGalleriesFolder();
-        const files = fs.readdirSync(GALLERIES_DIR);
-        files.forEach(file => {
-            if (file.endsWith('.json')) {
-                const galleryId = file.replace('.json', '');
-                const data = JSON.parse(fs.readFileSync(path.join(GALLERIES_DIR, file), 'utf-8'));
-                const gallery = new ImageGallery();
-                data.forEach(img => gallery.addImage(img.imageId, img.imageUrl));
-                this.galleries.set(galleryId, gallery);
-            }
-        });
-    }
-
-    saveGallery(galleryId) {
-        this.ensureGalleriesFolder();
-        const gallery = this.galleries.get(galleryId);
-        if (gallery) {
-            const data = gallery.displayGallery();
-            fs.writeFileSync(path.join(GALLERIES_DIR, `${galleryId}.json`), JSON.stringify(data, null, 2));
+    async listGallery(galleryId) {
+        if (!galleryId) {
+            throw new Error("Gallery ID is required.");
         }
-    }
 
-    createGallery(galleryId) {
-        if (this.galleries.has(galleryId)) {
-            return false; // Gallery already exists
+        const gallery = await this.store.read({ galleryId });
+        if (!gallery || gallery.length === 0) {
+            throw new Error(`Gallery with ID '${galleryId}' not found.`);
         }
-        this.galleries.set(galleryId, new ImageGallery());
-        this.saveGallery(galleryId);
-        return true;
-    }
 
-    getGallery(galleryId) {
-        return this.galleries.get(galleryId) || null;
+        return gallery[0];
     }
-
-    deleteGallery(galleryId) {
-        if (this.galleries.delete(galleryId)) {
-            fs.unlinkSync(path.join(GALLERIES_DIR, `${galleryId}.json`)); // Delete file
-            return true;
+    async readGallery(galleryId) {
+        if (!galleryId) {
+            throw new Error("Gallery ID is required.");
         }
-        return false;
+        return await this.store.read({ galleryId });
+    }
+    async fetchGalleries() {
+        return await this.store.read();
+    }
+    
+    async deleteGallery(galleryId) {
+        if (!galleryId) {
+            throw new Error("Gallery ID is required.");
+        }
+        return await this.store.purge({galleryId});
     }
 
-    listGalleries() {
-        return Array.from(this.galleries.keys());
+    async deleteImage(galleryId, imageId) {
+        if (!galleryId || !imageId) {
+            throw new Error("Gallery ID and Image ID are required.");
+        }
+    
+        const wasDeleted = await this.store.purge({ galleryId, imageId });
+        console.log("Image deleted successfully:", wasDeleted); // Debugging log
+        return wasDeleted; // Return the result of the purge call
     }
-
-    addImage(galleryId, imageId, imageUrl) {
-        const gallery = this.getGallery(galleryId);
-        if (!gallery) return false;
-        gallery.addImage(imageId, imageUrl);
-        this.saveGallery(galleryId);
-        return true;
+    
+    async addImage(galleryId, imageUrl) {
+        if (!galleryId || !imageUrl) {
+            throw new Error("Gallery ID and image URL are required.");
+        }
+    
+        const addedImage = await this.store.addImage(galleryId, imageUrl);
+        return addedImage; 
     }
-
-    deleteImageById(galleryId, imageId) {
-        const gallery = this.getGallery(galleryId);
-        if (!gallery) return false;
-        gallery.deleteImageById(imageId);
-        this.saveGallery(galleryId);
-        return true;
+    
+    
+    async readImage(imageId) {
+        if (!imageId) {
+            throw new Error("Image ID is required.");
+        }
+        return await this.store.read({ imageId });
     }
-
-    updateImageUrl(galleryId, imageId, newImageUrl) {
-        const gallery = this.getGallery(galleryId);
-        if (!gallery) return false;
-        gallery.updateImageUrl(imageId, newImageUrl);
-        this.saveGallery(galleryId);
-        return true;
+    async updateImageLink(imageId, newUrl) {
+        if (!imageId || !newUrl) {
+            throw new Error("Image ID and new URL are required.");
+        }
+        return await this.store.updateImageLink(imageId, newUrl);
     }
-
-    displayGallery(galleryId) {
-        const gallery = this.getGallery(galleryId);
-        return gallery ? gallery.displayGallery() : null;
+    async listImagesInGallery(galleryId) {
+        if (!galleryId) {
+            throw new Error("Gallery ID is required.");
+        }
+        return await this.store.read({ galleryId });
     }
+    
 }
 
 export default GalleryManager;

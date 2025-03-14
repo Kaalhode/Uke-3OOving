@@ -1,9 +1,9 @@
-class ImageNode {
-    constructor(imageId, imageUrl) {
+class Image {
+    constructor(imageId, imageUrl, galleryId) {
         this.imageId = imageId;
         this.imageUrl = imageUrl;
-        this.next = null;
+        this.galleryId = galleryId; 
     }
 }
 
-export default ImageNode;
+export default Image;

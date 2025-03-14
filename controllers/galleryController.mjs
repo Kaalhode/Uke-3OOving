@@ -3,116 +3,124 @@ import HTTP_CODES from '../utils/httpCodes.mjs';
 
 const galleryManager = new GalleryManager();
 
-export function createGallery(req, res) {
-    const { galleryId } = req.body;
-    if (!galleryId) {
-        return res.status(HTTP_CODES.CLIENT_ERROR.BAD_REQUEST).send('Gallery ID is required');
-    }
+export async function createGallery(req, res) {
+    const { name, description } = req.body;
 
-    const created = galleryManager.createGallery(galleryId);
-    if (created) {
-        res.status(HTTP_CODES.SUCCESS.CREATED).send(`Gallery '${galleryId}' created successfully`);
-    } else {
-        res.status(HTTP_CODES.CLIENT_ERROR.BAD_REQUEST).send('Gallery ID already exists');
+    try {
+        const gallery = await galleryManager.createGallery(name, description);
+        res.status(HTTP_CODES.SUCCESS.CREATED).json(gallery);
+    } catch (error) {
+        console.error("Error creating gallery:", error.message);
+        res.status(HTTP_CODES.SERVER_ERROR.INTERNAL_SERVER_ERROR).json({ error: "Failed to create gallery." });
     }
 }
 
-export function addImage(req, res) {
-    console.log("Received request to add image:", req.body);
-
-    const { galleryId, imageId, imageUrl } = req.body;
-
-    if (!galleryId || !imageId || !imageUrl) {
-        console.log("Missing required fields");
-        return res.status(HTTP_CODES.CLIENT_ERROR.BAD_REQUEST).send('Gallery ID, Image ID, and Image URL are required');
-    }
-
-    console.log(`Looking for gallery with ID: ${galleryId}`);
-    const gallery = galleryManager.getGallery(galleryId);
-
-    if (!gallery) {
-        console.log("Gallery not found:", galleryId);
-        return res.status(HTTP_CODES.CLIENT_ERROR.NOT_FOUND).send('Gallery not found');
-    }
-
-    console.log("Gallery before adding image:", gallery.displayGallery());
-
-    console.log(`Gallery found. Adding image: ${imageId}`);
-    gallery.addImage(imageId, imageUrl);
-
-    console.log("Gallery after adding image:", gallery.displayGallery());
-
-    console.log("Saving gallery after adding image...");
-    galleryManager.saveGallery(galleryId, gallery);
-
-    console.log("Image added successfully:", { imageId, imageUrl });
-    res.status(HTTP_CODES.SUCCESS.CREATED).send('Image added successfully');
-}
-
-
-export function findImageById(req, res) {
-    const { galleryId, imageId } = req.params;
-    if (!galleryId || !imageId) {
-        return res.status(HTTP_CODES.CLIENT_ERROR.BAD_REQUEST).send('Gallery ID and Image ID are required');
-    }
-
-    const gallery = galleryManager.getGallery(galleryId);
-    if (!gallery) {
-        return res.status(HTTP_CODES.CLIENT_ERROR.NOT_FOUND).send('Gallery not found');
-    }
-
-    const image = gallery.findImageById(imageId);
-    if (image) {
-        res.status(HTTP_CODES.SUCCESS.OK).json(image);
-    } else {
-        res.status(HTTP_CODES.CLIENT_ERROR.NOT_FOUND).send('Image not found');
-    }
-}
-
-export function deleteImageById(req, res) {
-    const { galleryId, imageId } = req.params;
-    const success = galleryManager.deleteImageById(galleryId, imageId);
-    if (success) {
-        res.status(HTTP_CODES.SUCCESS.OK).send('Image deleted successfully');
-    } else {
-        res.status(HTTP_CODES.CLIENT_ERROR.NOT_FOUND).send('Gallery or Image not found');
-    }
-}
-
-export function updateImageUrl(req, res) {
-    const { galleryId, imageId, newImageUrl } = req.body;
-    if (!galleryId || !imageId || !newImageUrl) {
-        return res.status(HTTP_CODES.CLIENT_ERROR.BAD_REQUEST).send('Gallery ID, Image ID, and new Image URL are required');
-    }
-
-    const success = galleryManager.updateImageUrl(galleryId, imageId, newImageUrl);
-    if (success) {
-        res.status(HTTP_CODES.SUCCESS.OK).send('Image URL updated successfully');
-    } else {
-        res.status(HTTP_CODES.CLIENT_ERROR.NOT_FOUND).send('Gallery or Image not found');
-    }
-}
-
-export function displayGallery(req, res) {
+export async function addImage(req, res) {
     const { galleryId } = req.params;
-    const images = galleryManager.displayGallery(galleryId);
-    if (images) {
+    const { url } = req.body;
+
+    try {
+        const addedImage = await galleryManager.addImage(parseInt(galleryId, 10), url);
+        res.status(HTTP_CODES.SUCCESS.CREATED).json({ message: "Image uploaded successfully.", image: addedImage });
+    } catch (error) {
+        console.error("Error in addImage controller:", error.message);
+        res.status(HTTP_CODES.SERVER_ERROR.INTERNAL_SERVER_ERROR).json({ error: "Failed to upload image." });
+    }
+}
+
+export async function fetchGalleries(req, res) {
+    try {
+        const galleries = await galleryManager.fetchGalleries();
+        res.status(HTTP_CODES.SUCCESS.OK).json(galleries);
+    } catch (error) {
+        console.error("Error fetching galleries:", error.message);
+        res.status(HTTP_CODES.SERVER_ERROR.INTERNAL_SERVER_ERROR).json({ error: "Failed to fetch galleries." });
+    }
+}
+
+export async function listGallery(req, res) {
+    const { galleryId } = req.params;
+
+    try {
+        if (!galleryId) {
+            return res.status(HTTP_CODES.CLIENT_ERROR.BAD_REQUEST).json({ error: "Gallery ID is required." });
+        }
+
+        const gallery = await galleryManager.listGallery(parseInt(galleryId, 10));
+        res.status(HTTP_CODES.SUCCESS.OK).json(gallery);
+    } catch (error) {
+        console.error("Error listing gallery:", error.message);
+        res.status(HTTP_CODES.SERVER_ERROR.INTERNAL_SERVER_ERROR).json({ error: "Failed to list gallery." });
+    }
+}
+
+export async function listImagesInGallery(req, res) {
+    const { galleryId } = req.params;
+
+    try {
+        if (!galleryId) {
+            return res.status(HTTP_CODES.CLIENT_ERROR.BAD_REQUEST).json({ error: "Gallery ID is required." });
+        }
+
+        const images = await galleryManager.listImagesInGallery(parseInt(galleryId, 10));
         res.status(HTTP_CODES.SUCCESS.OK).json(images);
-    } else {
-        res.status(HTTP_CODES.CLIENT_ERROR.NOT_FOUND).send('Gallery not found');
+    } catch (error) {
+        console.error("Error listing images:", error.message);
+        res.status(HTTP_CODES.SERVER_ERROR.INTERNAL_SERVER_ERROR).json({ error: "Failed to fetch images for the gallery." });
     }
 }
 
-export function deleteGallery(req, res) {
-    const { galleryId } = req.params;
-    const deleted = galleryManager.deleteGallery(galleryId);
-    if (deleted) {
-        res.status(HTTP_CODES.SUCCESS.OK).send('Gallery deleted successfully');
-    } else {
-        res.status(HTTP_CODES.CLIENT_ERROR.NOT_FOUND).send('Gallery not found');
+
+export async function deleteGallery(req, res) {
+    const {galleryId} = req.params;
+
+    try {
+        const result = await galleryManager.deleteGallery(galleryId);
+        res.status(HTTP_CODES.SUCCESS.OK).json({ message: "Gallery deleted successfully", result });
+    } catch (error) {
+        console.error("Error deleting gallery:", error.message);
+        res.status(HTTP_CODES.SERVER_ERROR.INTERNAL_SERVER_ERROR).json({ error: "Failed to delete gallery." });
     }
 }
 
-export function listGalleries(req, res) {
-    res.status(HTTP_CODES.SUCCESS.OK).json(galleryManager.listGalleries());
+export async function deleteImage(req, res) {
+    const { galleryId, imageId } = req.params;
+
+    try {
+        if (!galleryId || !imageId) {
+            return res.status(HTTP_CODES.CLIENT_ERROR.BAD_REQUEST).json({ error: "Gallery ID and Image ID are required." });
+        }
+
+        const wasDeleted = await galleryManager.deleteImage(galleryId, imageId);
+
+        if (wasDeleted) {
+            return res.status(HTTP_CODES.SUCCESS.OK).json({ message: "Image deleted successfully." });
+        } else {
+            return res.status(HTTP_CODES.CLIENT_ERROR.NOT_FOUND).json({ error: "Image not found or already deleted." });
+        }
+    } catch (error) {
+        console.error("Error deleting image:", error.message);
+        res.status(HTTP_CODES.SERVER_ERROR.INTERNAL_SERVER_ERROR).json({ error: "Failed to delete image." });
+    }
+}
+
+export async function updateImageLink(req, res) {
+    const { imageId } = req.params;
+    const { newUrl } = req.body;
+
+    try {
+        if (!imageId || !newUrl) {
+            return res.status(HTTP_CODES.CLIENT_ERROR.BAD_REQUEST).json({ error: "Image ID and new URL are required." });
+        }
+
+        const updatedImage = await galleryManager.updateImageLink(parseInt(imageId, 10), newUrl);
+        if (!updatedImage) {
+            return res.status(HTTP_CODES.CLIENT_ERROR.NOT_FOUND).json({ error: "Image not found." });
+        }
+
+        res.status(HTTP_CODES.SUCCESS.OK).json(updatedImage);
+    } catch (error) {
+        console.error("Error updating image link:", error.message);
+        res.status(HTTP_CODES.SERVER_ERROR.INTERNAL_SERVER_ERROR).json({ error: "Failed to update image link." });
+    }
 }
