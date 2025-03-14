@@ -6,7 +6,7 @@ if ("serviceWorker" in navigator) {
 }
 let currentGalleryId = null;
 
-const API_BASE_URL = "https://rendetestuke8.onrender.com/";
+const API_BASE_URL = "https://rendetestuke8.onrender.com";
 
 async function fetchGalleries() {
     try {
