@@ -47,8 +47,8 @@ class GalleryManager {
         }
     
         const wasDeleted = await this.store.purge({ galleryId, imageId });
-        console.log("Image deleted successfully:", wasDeleted); // Debugging log
-        return wasDeleted; // Return the result of the purge call
+        //console.log("Image deleted successfully:", wasDeleted); 
+        return wasDeleted; 
     }
     
     async addImage(galleryId, imageUrl) {

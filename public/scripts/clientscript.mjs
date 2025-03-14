@@ -82,14 +82,13 @@ async function createGallery() {
         if (!response.ok) throw new Error(`Error creating gallery: ${response.statusText}`);
 
         alert("Gallery created/updated successfully!");
-        fetchGalleries(); // Refresh gallery list
+        fetchGalleries();
     } catch (error) {
         console.error('Error creating gallery:', error);
         alert(`Failed to create gallery: ${error.message}`);
     }
 }
 
-// Delete a Gallery
 async function deleteGallery() {
     const galleryName = document.getElementById('delete-gallery-name').value.trim();
     if (!galleryName) {
@@ -105,7 +104,7 @@ async function deleteGallery() {
         if (!response.ok) throw new Error(`Error deleting gallery: ${response.statusText}`);
 
         alert("Gallery deleted successfully!");
-        fetchGalleries(); // Refresh gallery list
+        fetchGalleries();
     } catch (error) {
         console.error('Error deleting gallery:', error);
         alert(`Failed to delete gallery: ${error.message}`);
@@ -204,9 +203,8 @@ async function deleteCurrentGallery() {
 
         alert("Gallery deleted successfully!");
 
-        // Clear the gallery images section and refresh the gallery list
         document.getElementById('image-container').innerHTML = '';
-        currentGalleryId = null; // Reset current gallery ID
+        currentGalleryId = null; 
         fetchGalleries();
     } catch (error) {
         console.error('Error deleting gallery:', error);
@@ -234,7 +232,6 @@ async function updateImageLink(imageId) {
         const updatedImage = await response.json();
         alert("Image link updated successfully!");
 
-        // Update the image link in the DOM
         const imageElement = document.querySelector(`img[alt='Image ${imageId}']`);
         if (imageElement) {
             imageElement.src = updatedImage.url;
